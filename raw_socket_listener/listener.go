@@ -397,7 +397,12 @@ func (t *Listener) readPcap() {
 
 					srcIP = data[12:16]
 					dstIP = data[16:20]
-					data = data[ihl*4:]
+					if len(packet.Data()) < 64 && decoder == layers.LinkTypeEthernet { // beware the runt frame https://en.wikipedia.org/wiki/Ethernet_frame#Runt_frames
+						sliceLen := len(packet.Data()) - (len(packet.Data()) - int(binary.BigEndian.Uint16(data[2:4])) - of) - of
+						data = data[ihl * 4: sliceLen]
+					} else {
+						data = data[ihl * 4:]
+					}
 				} else {
 					// Truncated IP info
 					if len(data) < 40 {
