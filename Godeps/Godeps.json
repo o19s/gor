@@ -1,0 +1,36 @@
+{
+	"ImportPath": "github.com/buger/gor",
+	"GoVersion": "go1.6",
+	"GodepVersion": "v74",
+	"Deps": [
+		{
+			"ImportPath": "github.com/bitly/go-hostpool",
+			"Rev": "d0e59c22a56e8dadfed24f74f452cea5a52722d2"
+		},
+		{
+			"ImportPath": "github.com/buger/elastigo/api",
+			"Comment": "v1.0-76-g23fcfd9",
+			"Rev": "23fcfd9db0d8be2189a98fdab77a4c90fcc3a1e9"
+		},
+		{
+			"ImportPath": "github.com/buger/elastigo/core",
+			"Comment": "v1.0-76-g23fcfd9",
+			"Rev": "23fcfd9db0d8be2189a98fdab77a4c90fcc3a1e9"
+		},
+		{
+			"ImportPath": "github.com/google/gopacket",
+			"Comment": "v1.1.11-122-g15d3358",
+			"Rev": "15d335845f6df958e11bd888f46fcd8cf19ecf87"
+		},
+		{
+			"ImportPath": "github.com/google/gopacket/layers",
+			"Comment": "v1.1.11-122-g15d3358",
+			"Rev": "15d335845f6df958e11bd888f46fcd8cf19ecf87"
+		},
+		{
+			"ImportPath": "github.com/google/gopacket/pcap",
+			"Comment": "v1.1.11-122-g15d3358",
+			"Rev": "15d335845f6df958e11bd888f46fcd8cf19ecf87"
+		}
+	]
+}
