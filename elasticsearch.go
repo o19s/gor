@@ -26,7 +26,7 @@ type ESPlugin struct {
 }
 
 type ESRequestResponse struct {
-	ReqUrl               string `json:"Req_URL"`
+	ReqURL               string `json:"Req_URL"`
 	ReqMethod            string `json:"Req_Method"`
 	ReqUserAgent         string `json:"Req_User-Agent"`
 	ReqAcceptLanguage    string `json:"Req_Accept-Language,omitempty"`
@@ -121,7 +121,7 @@ func (p *ESPlugin) ResponseAnalyze(req, resp []byte, start, stop time.Time) {
 	req = payloadBody(req)
 
 	esResp := ESRequestResponse{
-		ReqUrl:               string(proto.Path(req)),
+		ReqURL:               string(proto.Path(req)),
 		ReqMethod:            string(proto.Method(req)),
 		ReqUserAgent:         string(proto.Header(req, []byte("User-Agent"))),
 		ReqAcceptLanguage:    string(proto.Header(req, []byte("Accept-Language"))),
