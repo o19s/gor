@@ -2,8 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"github.com/buger/elastigo/api"
-	"github.com/buger/elastigo/core"
+	"github.com/mattbaird/elastigo/lib"
 	"github.com/buger/gor/proto"
 	"log"
 	"regexp"
@@ -19,9 +18,10 @@ func (e *ESUriErorr) Error() string {
 type ESPlugin struct {
 	Active  bool
 	ApiPort string
+	eConn   *elastigo.Conn
 	Host    string
 	Index   string
-	indexor *core.BulkIndexer
+	indexor *elastigo.BulkIndexer
 	done    chan bool
 }
 
@@ -76,24 +76,24 @@ func (p *ESPlugin) Init(URI string) {
 	if err != nil {
 		log.Fatal("Can't initialize ElasticSearch plugin.", err)
 	}
+	p.eConn = elastigo.NewConn()
+	p.eConn.SetPort(p.ApiPort)
+	p.eConn.SetHosts([]string{p.Host})
 
-	api.Domain = p.Host
-	api.Port = p.ApiPort
-
-	p.indexor = core.NewBulkIndexerErrors(50, 60)
+	p.indexor = p.eConn.NewBulkIndexerErrors(50, 60)
 	p.done = make(chan bool)
-	p.indexor.Run(p.done)
+	p.indexor.Start()
 
 	// Only start the ErrorHandler goroutine when in verbose mode
 	// no need to burn ressources otherwise
-	// go p.ErrorHandler()
+	go p.ErrorHandler()
 
 	log.Println("Initialized Elasticsearch Plugin")
 	return
 }
 
 func (p *ESPlugin) IndexerShutdown() {
-	p.done <- true
+	p.indexor.Stop()
 	return
 }
 
@@ -147,7 +147,7 @@ func (p *ESPlugin) ResponseAnalyze(req, resp []byte, start, stop time.Time) {
 	if err != nil {
 		log.Println(err)
 	} else {
-		p.indexor.Index(p.Index, "RequestResponse", "", "", &t, j, true)
+		p.indexor.Index(p.Index, "RequestResponse", "", "", "", &t, j)
 	}
 	return
 }
