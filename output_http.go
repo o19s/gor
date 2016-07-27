@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/buger/gor/proto"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 const initialDynamicWorkers = 10

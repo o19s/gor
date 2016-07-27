@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // RAWInput used for intercepting traffic for given address

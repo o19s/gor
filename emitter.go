@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"io"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // Start initialize loop for sending data from inputs to outputs

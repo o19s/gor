@@ -2,7 +2,7 @@ package main
 
 import (
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // DummyInput used for debugging. It generate 1 "GET /"" request per second.

@@ -13,7 +13,7 @@ import (
 	"syscall"
 	"testing"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 var _ = log.Println

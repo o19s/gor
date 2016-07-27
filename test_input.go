@@ -4,7 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // TestInput used for testing purpose, it allows emitting requests on demand

@@ -8,7 +8,7 @@ import (
 	"log"
 	"net"
 	"os"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // TCPInput used for internal communication

@@ -19,7 +19,7 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 const testRawExpire = time.Millisecond * 200

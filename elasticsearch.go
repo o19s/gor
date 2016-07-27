@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"github.com/mattbaird/elastigo/lib"
 	"github.com/buger/gor/proto"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 	"log"
 	"regexp"
 	"time"
@@ -120,7 +120,6 @@ func (p *ESPlugin) ResponseAnalyze(req, resp []byte, start, stop time.Time) {
 	t := time.Now()
 	rtt := p.RttDurationToMs(stop.Sub(start))
 	req = gorproto.PayloadBody(req)
-
 
 	esResp := ESRequestResponse{
 		ReqURL:               string(proto.Path(req)),

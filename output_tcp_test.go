@@ -7,7 +7,7 @@ import (
 	"net"
 	"sync"
 	"testing"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 func TestTCPOutput(t *testing.T) {

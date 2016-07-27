@@ -6,7 +6,7 @@ import (
 	"log"
 	"net"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // TCPOutput used for sending raw tcp payloads

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"net/http/httputil"
 	"time"
-	"github.com/o19s/gor/gorproto"
+	"github.com/buger/gor/gorproto"
 )
 
 // HTTPInput used for sending requests to Gor via http
