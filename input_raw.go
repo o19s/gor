@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 // RAWInput used for intercepting traffic for given address
@@ -51,12 +52,12 @@ func (i *RAWInput) Read(data []byte) (int, error) {
 	var header []byte
 
 	if msg.IsIncoming {
-		header = payloadHeader(RequestPayload, msg.UUID(), msg.Start.UnixNano(), -1)
+		header = gorproto.PayloadHeader(gorproto.RequestPayload, msg.UUID(), msg.Start.UnixNano(), -1)
 		if len(i.realIPHeader) > 0 {
 			buf = proto.SetHeader(buf, i.realIPHeader, []byte(msg.IP().String()))
 		}
 	} else {
-		header = payloadHeader(ResponsePayload, msg.UUID(), msg.AssocMessage.Start.UnixNano(), msg.End.UnixNano()-msg.AssocMessage.Start.UnixNano())
+		header = gorproto.PayloadHeader(gorproto.ResponsePayload, msg.UUID(), msg.AssocMessage.Start.UnixNano(), msg.End.UnixNano()-msg.AssocMessage.Start.UnixNano())
 	}
 
 	copy(data[0:len(header)], header)

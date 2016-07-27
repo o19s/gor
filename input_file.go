@@ -13,6 +13,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 type fileInputReader struct {
@@ -23,7 +24,7 @@ type fileInputReader struct {
 }
 
 func (f *fileInputReader) parseNext() error {
-	payloadSeparatorAsBytes := []byte(payloadSeparator)
+	payloadSeparatorAsBytes := []byte(gorproto.PayloadSeparator)
 	var buffer bytes.Buffer
 
 	for {
@@ -44,7 +45,7 @@ func (f *fileInputReader) parseNext() error {
 
 		if bytes.Equal(payloadSeparatorAsBytes[1:], line) {
 			asBytes := buffer.Bytes()
-			meta := payloadMeta(asBytes)
+			meta := gorproto.PayloadMeta(asBytes)
 
 			f.timestamp, _ = strconv.ParseInt(string(meta[2]), 10, 64)
 			f.data = asBytes[:len(asBytes)-1]

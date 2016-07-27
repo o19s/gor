@@ -19,6 +19,7 @@ import (
 	"sync/atomic"
 	"testing"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 const testRawExpire = time.Millisecond * 200
@@ -48,7 +49,7 @@ func TestRAWInputIPv4(t *testing.T) {
 
 	output := NewTestOutput(func(data []byte) {
 		if data[0] == '1' {
-			body := payloadBody(data)
+			body := gorproto.PayloadBody(data)
 			if len(proto.Header(body, []byte("X-Real-IP"))) == 0 {
 				t.Error("Should have X-Real-IP header", string(body))
 			}
@@ -159,12 +160,12 @@ func TestInputRAW100Expect(t *testing.T) {
 	// We will use it to get content of raw HTTP request
 	testOutput := NewTestOutput(func(data []byte) {
 		switch data[0] {
-		case RequestPayload:
+		case gorproto.RequestPayload:
 			if strings.Contains(string(data), "Expect: 100-continue") {
 				t.Error("Should not contain 100-continue header")
 			}
 			wg.Done()
-		case ResponsePayload:
+		case gorproto.ResponsePayload:
 			wg.Done()
 		}
 	})

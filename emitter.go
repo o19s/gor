@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 // Start initialize loop for sending data from inputs to outputs
@@ -60,7 +61,7 @@ func CopyMulty(src io.Reader, writers ...io.Writer) (err error) {
 				Debug("[EMITTER] input:", string(payload[0:_maxN]), nr, "from:", src)
 			}
 
-			if modifier != nil && isRequestPayload(payload) {
+			if modifier != nil && gorproto.IsRequestPayload(payload) {
 				headSize := bytes.IndexByte(payload, '\n') + 1
 				body := payload[headSize:]
 				originalBodyLen := len(body)

@@ -13,6 +13,7 @@ import (
 	"strings"
 	"sync"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 var dateFileNameFuncs = map[string]func() string{
@@ -174,7 +175,7 @@ func (o *FileOutput) updateName() {
 }
 
 func (o *FileOutput) Write(data []byte) (n int, err error) {
-	if !isOriginPayload(data) {
+	if !gorproto.IsOriginPayload(data) {
 		return len(data), nil
 	}
 
@@ -200,7 +201,7 @@ func (o *FileOutput) Write(data []byte) (n int, err error) {
 	}
 
 	o.writer.Write(data)
-	o.writer.Write([]byte(payloadSeparator))
+	o.writer.Write([]byte(gorproto.PayloadSeparator))
 
 	o.queueLength++
 

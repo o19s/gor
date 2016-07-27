@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/buger/gor/proto"
+	"github.com/o19s/gor/gorproto"
 )
 
 const initialDynamicWorkers = 10
@@ -150,7 +151,7 @@ func (o *HTTPOutput) startWorker() {
 }
 
 func (o *HTTPOutput) Write(data []byte) (n int, err error) {
-	if !isRequestPayload(data) {
+	if !gorproto.IsRequestPayload(data) {
 		return len(data), nil
 	}
 
@@ -179,7 +180,7 @@ func (o *HTTPOutput) Read(data []byte) (int, error) {
 
 	Debug("[OUTPUT-HTTP] Received response:", string(resp.payload))
 
-	header := payloadHeader(ReplayedResponsePayload, resp.uuid, resp.startedAt, resp.roundTripTime)
+	header := gorproto.PayloadHeader(gorproto.ReplayedResponsePayload, resp.uuid, resp.startedAt, resp.roundTripTime)
 	copy(data[0:len(header)], header)
 	copy(data[len(header):], resp.payload)
 
@@ -187,13 +188,13 @@ func (o *HTTPOutput) Read(data []byte) (int, error) {
 }
 
 func (o *HTTPOutput) sendRequest(client *HTTPClient, request []byte) {
-	meta := payloadMeta(request)
+	meta := gorproto.PayloadMeta(request)
 	if len(meta) < 2 {
 		return
 	}
 	uuid := meta[1]
 
-	body := payloadBody(request)
+	body := gorproto.PayloadBody(request)
 	if !proto.IsHTTPPayload(body) {
 		return
 	}

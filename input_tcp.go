@@ -8,6 +8,7 @@ import (
 	"log"
 	"net"
 	"os"
+	"github.com/o19s/gor/gorproto"
 )
 
 // TCPInput used for internal communication
@@ -60,7 +61,7 @@ func (i *TCPInput) listen(address string) {
 func (i *TCPInput) handleConnection(conn net.Conn) {
 	defer conn.Close()
 
-	payloadSeparatorAsBytes := []byte(payloadSeparator)
+	payloadSeparatorAsBytes := []byte(gorproto.PayloadSeparator)
 	reader := bufio.NewReader(conn)
 	var buffer bytes.Buffer
 

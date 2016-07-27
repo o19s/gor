@@ -2,6 +2,7 @@ package main
 
 import (
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 // DummyInput used for debugging. It generate 1 "GET /"" request per second.
@@ -33,11 +34,11 @@ func (i *DummyInput) emit() {
 	for {
 		select {
 		case <-ticker.C:
-			uuid := uuid()
-			reqh := payloadHeader(RequestPayload, uuid, time.Now().UnixNano(), -1)
+			uuid := gorproto.UUID()
+			reqh := gorproto.PayloadHeader(gorproto.RequestPayload, uuid, time.Now().UnixNano(), -1)
 			i.data <- append(reqh, []byte("GET / HTTP/1.1\r\nHost: www.w3.org\r\nUser-Agent: Go 1.1 package http\r\nAccept-Encoding: gzip\r\n\r\n")...)
 
-			resh := payloadHeader(ResponsePayload, uuid, time.Now().UnixNano()+1, 1)
+			resh := gorproto.PayloadHeader(gorproto.ResponsePayload, uuid, time.Now().UnixNano()+1, 1)
 			i.data <- append(resh, []byte("HTTP/1.1 200 OK\r\nContent-Length: 0\r\n\r\n")...)
 		}
 	}

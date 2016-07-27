@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 // TCPOutput used for sending raw tcp payloads
@@ -60,7 +61,7 @@ func (o *TCPOutput) worker() {
 
 	for {
 		conn.Write(<-o.buf)
-		_, err := conn.Write([]byte(payloadSeparator))
+		_, err := conn.Write([]byte(gorproto.PayloadSeparator))
 
 		if err != nil {
 			log.Println("Lost connection with aggregator instance, reconnecting")
@@ -71,7 +72,7 @@ func (o *TCPOutput) worker() {
 }
 
 func (o *TCPOutput) Write(data []byte) (n int, err error) {
-	if !isOriginPayload(data) {
+	if !gorproto.IsOriginPayload(data) {
 		return len(data), nil
 	}
 

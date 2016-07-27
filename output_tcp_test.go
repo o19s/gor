@@ -7,6 +7,7 @@ import (
 	"net"
 	"sync"
 	"testing"
+	"github.com/o19s/gor/gorproto"
 )
 
 func TestTCPOutput(t *testing.T) {
@@ -49,7 +50,7 @@ func startTCP(cb func([]byte)) net.Listener {
 			go func() {
 				reader := bufio.NewReader(conn)
 				scanner := bufio.NewScanner(reader)
-				scanner.Split(payloadScanner)
+				scanner.Split(gorproto.PayloadScanner)
 
 				for scanner.Scan() {
 					cb(scanner.Bytes())

@@ -9,6 +9,7 @@ import (
 	"strings"
 	"sync"
 	"testing"
+	"github.com/o19s/gor/gorproto"
 )
 
 func TestHTTPInput(t *testing.T) {
@@ -49,7 +50,7 @@ func TestInputHTTPLargePayload(t *testing.T) {
 
 	input := NewHTTPInput("127.0.0.1:0")
 	output := NewTestOutput(func(data []byte) {
-		if len(proto.Body(payloadBody(data))) != 4000000 {
+		if len(proto.Body(gorproto.PayloadBody(data))) != 4000000 {
 			t.Error("Should receive full file")
 		}
 		wg.Done()

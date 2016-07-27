@@ -6,6 +6,7 @@ import (
 	"net"
 	"sync"
 	"testing"
+	"github.com/o19s/gor/gorproto"
 )
 
 func TestTCPInput(t *testing.T) {
@@ -39,7 +40,7 @@ func TestTCPInput(t *testing.T) {
 	for i := 0; i < 100; i++ {
 		wg.Add(1)
 		conn.Write(msg)
-		conn.Write([]byte(payloadSeparator))
+		conn.Write([]byte(gorproto.PayloadSeparator))
 	}
 
 	wg.Wait()

@@ -4,6 +4,7 @@ import (
 	"crypto/rand"
 	"encoding/base64"
 	"time"
+	"github.com/o19s/gor/gorproto"
 )
 
 // TestInput used for testing purpose, it allows emitting requests on demand
@@ -22,7 +23,7 @@ func NewTestInput() (i *TestInput) {
 func (i *TestInput) Read(data []byte) (int, error) {
 	buf := <-i.data
 
-	header := payloadHeader(RequestPayload, uuid(), time.Now().UnixNano(), -1)
+	header := gorproto.PayloadHeader(gorproto.RequestPayload, gorproto.UUID(), time.Now().UnixNano(), -1)
 	copy(data[0:len(header)], header)
 	copy(data[len(header):], buf)
 
